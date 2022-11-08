@@ -22,7 +22,7 @@ def define_parameters():
     surf_prod_ratio = 6.75
     deep_prod_ratio = 7.4
 
-    # Cosmogenic radionuclide constants and parameters
+    # Cosmogenic radionuclide constants and parameters.
     # atn=Attenuation length for neutrons (g/cm2), atnm=Attenuation length for negative muons, atfm=Attenuation length for fast muons
     atn = 152
     atnm = 1500
