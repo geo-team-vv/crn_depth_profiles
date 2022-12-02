@@ -24,26 +24,32 @@ parameters = define_parameters()
 # Number of simulations
 n_simus = 10000
 
+# Modify input parameters of Monte Carlo simulations, i.e. steps defined in the params_monte_carlo.csv
+# file, according to Vandermaelen et al. (2022).
+reproduce_scenario_geosite_as = True
+
 # Compute Monte Carlo parameters based on parameters file
 params_mc = define_monte_carlo_parameters(data_monte_carlo, n_simus)
 
 # -----------------------------------------------------------------------------
 # Modify parameters that are functions of others, in order to constrain scenarios
-# as they are presented in Vandermaelen et al. (2022).
+# as they are presented in Vandermaelen et al. (2022), if parameter scenario_geosite_as is true.
 
-# Compute total aggradation time without step 5, which is constrained by external data
-aggradation_duration_without_step_5 = params_mc["total_times"][0] + params_mc["total_times"][1] + params_mc["total_times"][2] + params_mc["total_times"][3] + params_mc["total_times"][5] + params_mc["total_times"][6] + params_mc["total_times"][7]
-params_mc["total_times"][4] = np.rint(np.random.uniform(500000.0, 1000000.0 - aggradation_duration_without_step_5, n_simus)).astype(int)
+if(reproduce_scenario_geosite_as):
 
-# Define a normal distribution for inheritance of the first step and use these values for steps 2 and 4
-params_mc["N_inh_values"][0] = np.absolute(np.rint(np.random.normal(900000.0, 20000.0, n_simus)).astype(int))
-params_mc["N_inh_values"][1] = params_mc["N_inh_values"][0]
-params_mc["N_inh_values"][3] = params_mc["N_inh_values"][0]
+    # Compute total aggradation time without step 5, which is constrained by external data
+    aggradation_duration_without_step_5 = params_mc["total_times"][0] + params_mc["total_times"][1] + params_mc["total_times"][2] + params_mc["total_times"][3] + params_mc["total_times"][5] + params_mc["total_times"][6] + params_mc["total_times"][7]
+    params_mc["total_times"][4] = np.rint(np.random.uniform(500000.0, 1000000.0 - aggradation_duration_without_step_5, n_simus)).astype(int)
 
-# Compute erosion values of steps 3, 6 and 8, which depends on previous aggradation values
-params_mc["geomorpho_histories"][2] = np.absolute(params_mc["geomorpho_histories"][1]) - 185
-params_mc["geomorpho_histories"][5] = np.absolute(params_mc["geomorpho_histories"][3]) - 275
-params_mc["geomorpho_histories"][7] = np.absolute(params_mc["geomorpho_histories"][6]) - 60
+    # Define a normal distribution for inheritance of the first step and use these values for steps 2 and 4
+    params_mc["N_inh_values"][0] = np.absolute(np.rint(np.random.normal(900000.0, 20000.0, n_simus)).astype(int))
+    params_mc["N_inh_values"][1] = params_mc["N_inh_values"][0]
+    params_mc["N_inh_values"][3] = params_mc["N_inh_values"][0]
+
+    # Compute erosion values of steps 3, 6 and 8, which depends on previous aggradation values
+    params_mc["geomorpho_histories"][2] = np.absolute(params_mc["geomorpho_histories"][1]) - 185
+    params_mc["geomorpho_histories"][5] = np.absolute(params_mc["geomorpho_histories"][3]) - 275
+    params_mc["geomorpho_histories"][7] = np.absolute(params_mc["geomorpho_histories"][6]) - 60
 
 # -----------------------------------------------------------------------------
 # Compute simple Monte Carlo simulations for n_simus simulations
