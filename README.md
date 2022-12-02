@@ -1,5 +1,9 @@
 # Numerical modelling of complex CRN accumulation history
 
+## Instructions
+
+More info about how to run the model is available [here](readme/instructions.md).
+
 ## Purpose
 
 This repository hosts the numerical modelling resources developed in the frame of our publication in the Geochronology journal.

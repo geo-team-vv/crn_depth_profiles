@@ -1,4 +1,3 @@
-# -----------------------------------------------------------------------------
 # Libraries to import
 import timeit
 from CRN_functions import *
@@ -22,7 +21,7 @@ parameters = define_parameters()
 # Simple Monte Carlo simulations
 
 # Number of simulations
-n_simus = 10000
+n_simus = 1000
 
 # Modify input parameters of Monte Carlo simulations, i.e. steps defined in the params_monte_carlo.csv
 # file, according to Vandermaelen et al. (2022).
