@@ -28,7 +28,8 @@ n_simus = 10000
 params_mc = define_monte_carlo_parameters(data_monte_carlo, n_simus)
 
 # -----------------------------------------------------------------------------
-# Modify parameters that are functions of others
+# Modify parameters that are functions of others, in order to constrain scenarios
+# as they are presented in Vandermaelen et al. (2022).
 
 # Compute total aggradation time without step 5, which is constrained by external data
 aggradation_duration_without_step_5 = params_mc["total_times"][0] + params_mc["total_times"][1] + params_mc["total_times"][2] + params_mc["total_times"][3] + params_mc["total_times"][5] + params_mc["total_times"][6] + params_mc["total_times"][7]
@@ -55,7 +56,8 @@ scenarios = compute_monte_carlo_simulations(params_mc, data_Be, data_Al, paramet
 print("TIME ELAPSED: " + str(timeit.default_timer() - start_time))
 
 # -----------------------------------------------------------------------------
-# Define step of history for which data will be extracted and plotted (Steps 1, 3 and 6 are relevant)
+# Define step of history for which data will be extracted and plotted (Steps 1, 3 and 6 are relevant
+# in the frame of Vandermaelen et al., 2022).
 step = 6
 
 # Get variables from scenarios to be plotted for a given step
