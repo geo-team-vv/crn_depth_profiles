@@ -10,8 +10,6 @@ dir_root = os.path.dirname(sys.path[0])
 # Read csv files containing observed data
 data_Al = pd.read_csv(dir_root + "/data/obs_data_al.csv", sep = ";", header = 0)
 data_Be = pd.read_csv(dir_root + "/data/obs_data_be.csv", sep = ";", header = 0)
-# Read parameters values for Monte Carlo simulations
-data_monte_carlo = pd.read_csv(dir_root + "/data/params_monte_carlo.csv", sep = ";")
 
 # -----------------------------------------------------------------------------
 # Define parameters of CRN modelling
