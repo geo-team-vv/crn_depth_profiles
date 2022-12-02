@@ -1,6 +1,5 @@
 # -----------------------------------------------------------------------------
 # Libraries to import
-import timeit
 from CRN_functions import *
 
 # -----------------------------------------------------------------------------
@@ -24,7 +23,6 @@ parameters = define_parameters()
 # Fill the total_time, geomorpho_history and N_inh list with your own scenario values
 total_time = [10000.0, 10000.0, 10000.0, 10000.0, 10000.0]
 geomorpho_history = [100, -50, 200, 0, -100]
-N_inh_iterations = [10000, 0, 5000]
 N_inh = [10000, 0, 0, 0, 5000]
 
 # -----------------------------------------------------------------------------
