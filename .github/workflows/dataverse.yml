@@ -3,10 +3,11 @@ on:
 
 jobs:
   build:
-  steps: 
-    - name: Send repo to UCLouvain Dataverse
-    uses: IQSS/dataverse-uploader@v1.3
-    with:
-      DATAVERSE_TOKEN: ${{secrets.DATAVERSE_TOKEN}}
-      DATAVERSE_SERVER: https://dataverse.uclouvain.be/
-      DATAVERSE_DATASET_DOI: doi:10.14428/DVN/GGRVT0
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Send repo to UCLouvain Dataverse
+        uses: IQSS/dataverse-uploader@v1.3
+        with:
+          DATAVERSE_TOKEN: ${{secrets.DATAVERSE_TOKEN}}
+          DATAVERSE_SERVER: https://dataverse.uclouvain.be/
+          DATAVERSE_DATASET_DOI: doi:10.14428/DVN/GGRVT0
