@@ -1,2 +1,0 @@
-- name: Dataverse Uploader Action
-  uses: IQSS/dataverse-uploader@v1.1
