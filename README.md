@@ -14,4 +14,4 @@ This repository hosts the numerical modelling resources developed in the frame o
 
 - Nathan Vandermaelen - UCLouvain, Belgium ([nathan.vandermaelen@uclouvain.be](nathan.vandermaelen@uclouvain.be)).
 - Veerle Vanacker - UCLouvain, Belgium ([veerle.vanacker@uclouvain.be](veerle.vanacker@uclouvain.be)).
-- François Clapuyt - UCLouvain, Belgiium ([francois.clapuyt@uclouvain.be](francois.clapuyt@uclouvain.be)).
+- François Clapuyt - UCLouvain, Belgium ([francois.clapuyt@uclouvain.be](francois.clapuyt@uclouvain.be)).
