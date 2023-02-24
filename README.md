@@ -6,7 +6,6 @@ To install the model, simply clone the current repository using the following co
 
 ```
 git clone https://github.com/geo-team-vv/crn_depth_profiles.git
-
 ```
 
 The required dependencies to run the model are the following:
