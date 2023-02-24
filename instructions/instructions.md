@@ -43,36 +43,7 @@ For each step, minimum and maximum values are defined for:
 
 Actual values in data files are those measured and used to model the As geosite profile from Vandermaelen et al. (2022).
 
-## Workflow
-
-### One scenario
-
-To test your setup, first run the `CRN_model_one_scenario.py` python script. The script should normally run properly without any modifications. For a single scenario, the script runs as follows:
-
-- The `compute_crn_depth_profile()` function computes the CRN concentrations for a given scenario, for every centimeter of the depth profile. It returns a dictionary with two entries, i.e. the modelled Aluminium-26 and Beryllium-10 concentrations over the entire depth of the profile.
-
-```python
-{"crn_conc_Al": array([64177.53956079, 63770.15870121, 63368.35409481, ...,
-       71496.74567894, 71488.17187558, 71479.60931807]),
- "crn_conc_Be": array([ 9508.87326132,  9447.67712928,  9387.32019431, ...,
-       10849.08979224, 10848.47401911, 10847.8586621 ])}
-```
-
-- The `get_fitted_concentrations()` function gets the fitted concentrations at the depth of observations (defined in `obs_data_*.csv` files). It returns a dictionary with two entries, i.e. the fitted Aluminium-26 and the fitted Beryllium-10 concentrations at depth of observations.
-
-```python
-{"fitted_conc_Al": array([247834.82874791, 102747.13372228,  81452.76275539]),
- "fitted_conc_Be": array([28453.37072634, 27700.96389235, 52304.81592856, 42550.02118885,
-       35143.43140491, 31313.80504069, 24698.69772341, 17404.52017274,
-       13849.88629079, 12550.38480446, 11896.83231942, 11688.03661138,
-       11579.48702822, 11438.00328006])}
-```
-
-- The `compute_reduced_chisquare()` function returns the reduced Chi-squared value and its associated p-value for the fitting against observed concentrations. The result is returned as a dictionary.
-
-```python
-{ "chi_value": 543.9435949107092, "p_value": 0.0 }
-```
+## Parameters
 
 The default parameters values (see `CRN_functions.py` file for further details) are defined as follows:
 
@@ -106,6 +77,37 @@ parameters = define_default_parameters()
 # Modify the production rate of Beryllium-10
 parameters["prod_rate"] = 4.8
 
+```
+
+## Workflow
+
+### One scenario
+
+To test your setup, first run the `CRN_model_one_scenario.py` python script. The script should normally run properly without any modifications. For a single scenario, the script runs as follows:
+
+- The `compute_crn_depth_profile()` function computes the CRN concentrations for a given scenario, for every centimeter of the depth profile. It returns a dictionary with two entries, i.e. the modelled Aluminium-26 and Beryllium-10 concentrations over the entire depth of the profile.
+
+```python
+{"crn_conc_Al": array([64177.53956079, 63770.15870121, 63368.35409481, ...,
+       71496.74567894, 71488.17187558, 71479.60931807]),
+ "crn_conc_Be": array([ 9508.87326132,  9447.67712928,  9387.32019431, ...,
+       10849.08979224, 10848.47401911, 10847.8586621 ])}
+```
+
+- The `get_fitted_concentrations()` function gets the fitted concentrations at the depth of observations (defined in `obs_data_*.csv` files). It returns a dictionary with two entries, i.e. the fitted Aluminium-26 and the fitted Beryllium-10 concentrations at depth of observations.
+
+```python
+{"fitted_conc_Al": array([247834.82874791, 102747.13372228,  81452.76275539]),
+ "fitted_conc_Be": array([28453.37072634, 27700.96389235, 52304.81592856, 42550.02118885,
+       35143.43140491, 31313.80504069, 24698.69772341, 17404.52017274,
+       13849.88629079, 12550.38480446, 11896.83231942, 11688.03661138,
+       11579.48702822, 11438.00328006])}
+```
+
+- The `compute_reduced_chisquare()` function returns the reduced Chi-squared value and its associated p-value for the fitting against observed concentrations. The result is returned as a dictionary.
+
+```python
+{ "chi_value": 543.9435949107092, "p_value": 0.0 }
 ```
 
 ### Monte Carlo simulations
