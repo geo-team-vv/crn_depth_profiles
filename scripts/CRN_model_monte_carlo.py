@@ -1,6 +1,6 @@
 # Libraries to import
 import timeit
-from CRN_functions import *
+from utilities.CRN_functions import *
 
 # -----------------------------------------------------------------------------
 # Read data files
@@ -8,14 +8,14 @@ from CRN_functions import *
 # Get root directory
 dir_root = os.path.dirname(sys.path[0])
 # Read csv files containing observed data
-data_Al = pd.read_csv(dir_root + "/data/obs_data_al.csv", sep = ";", header = 0)
-data_Be = pd.read_csv(dir_root + "/data/obs_data_be.csv", sep = ";", header = 0)
+data_Al = pd.read_csv(os.path.join(dir_root, "data", "obs_data_al.csv"), sep = ";", header = 0)
+data_Be = pd.read_csv(os.path.join(dir_root, "data", "obs_data_be.csv"), sep = ";", header = 0)
 # Read parameters values for Monte Carlo simulations
-data_monte_carlo = pd.read_csv(dir_root + "/data/params_monte_carlo.csv", sep = ";")
+data_monte_carlo = pd.read_csv(os.path.join(dir_root, "data", "params_monte_carlo.csv"), sep = ";")
 
 # -----------------------------------------------------------------------------
 # Define parameters of CRN modelling
-parameters = define_parameters()
+parameters = define_default_parameters()
 
 # -----------------------------------------------------------------------------
 # Simple Monte Carlo simulations
@@ -23,9 +23,9 @@ parameters = define_parameters()
 # Number of simulations
 n_simus = 1000
 
-# Modify input parameters of Monte Carlo simulations, i.e. steps defined in the params_monte_carlo.csv
-# file, according to Vandermaelen et al. (2022).
-reproduce_scenario_geosite_as = True
+# If true, the input parameters of Monte Carlo simulations, i.e. steps defined in the params_monte_carlo.csv
+# file, will be modified according to Vandermaelen et al. (2022).
+reproduce_scenario_geosite_vandermaelen = True
 
 # Compute Monte Carlo parameters based on parameters file
 params_mc = define_monte_carlo_parameters(data_monte_carlo, n_simus)
@@ -34,7 +34,7 @@ params_mc = define_monte_carlo_parameters(data_monte_carlo, n_simus)
 # Modify parameters that are functions of others, in order to constrain scenarios
 # as they are presented in Vandermaelen et al. (2022), if parameter scenario_geosite_as is true.
 
-if(reproduce_scenario_geosite_as):
+if(reproduce_scenario_geosite_vandermaelen):
 
     # Compute total aggradation time without step 5, which is constrained by external data
     aggradation_duration_without_step_5 = params_mc["total_times"][0] + params_mc["total_times"][1] + params_mc["total_times"][2] + params_mc["total_times"][3] + params_mc["total_times"][5] + params_mc["total_times"][6] + params_mc["total_times"][7]

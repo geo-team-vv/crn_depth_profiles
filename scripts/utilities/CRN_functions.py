@@ -9,7 +9,7 @@ from scipy import stats
 # -----------------------------------------------------------------------------
 # Function to list all the parameters of the CRN accumulation function into one container. 
 # The output is a dictionary of values. 
-def define_parameters():
+def define_default_parameters():
 
     # Bulk density of overburden (2.1 per default)
     rho = 2.1
@@ -410,7 +410,17 @@ def compute_monte_carlo_simulations(params_monte_carlo, data_Be, data_Al, parame
 
         # Free memory from current objects
         del depth_profiles, fitted_concentrations, chi
+
+        # Print progress every 10% of simulations
+        if simu % (n_simus/10) == 0:
+
+            # Print every 10% of simulations
+            print("## COMPUTING MONTE CARLO SIMULATIONS: ", simu/n_simus*100, "%")
     
+    # Print number of scenarios
+    print("## NUMBER OF SIGNIFICANT SCENARIOS (p-value >= 0.05): ", len(scenarios))
+
+    # Return scenarios
     return scenarios
 
 # -----------------------------------------------------------------------------
@@ -434,6 +444,10 @@ def get_variables_from_scenarios(scenarios, step):
     
     data_plot["step"] = step
 
+    # Count number of scenarios for current step and print message
+    if len(data_plot["total_time"]) == 0:
+        print("## NO SIGNIFICANT SCENARIO FOR STEP HAVE BEEN MODELLED (data_plot is empty), i.e. you should increase the number of simulations (n_simus).")
+
     # Return data from scenarios to be plotted
     return data_plot
 
@@ -441,44 +455,51 @@ def get_variables_from_scenarios(scenarios, step):
 # Plot Gaussian Kernels 
 def plot_gaussian_kernel(data_plot, data_monte_carlo, dir_root):
 
-    # Create output directory if it does not exists
-    dir_graphs = dir_root + "/graphs/"
-    if not os.path.exists(dir_graphs):
-        os.makedirs(dir_graphs)
+    # Check if data_plot contains values 
+    if len(data_plot["total_time"]) == 0:
+        print("## NO GRAPH CAN BE PLOTTED BECAUSE DATA_PLOT IS EMPTY.")
+    
+    # Plot graphs if data_plot is not empty
+    else:
 
-    # Format the colorbar
-    def fmt(x, pos): 
-        a, b = '{:.2e}'.format(x).split('e')
-        b = int(b)
-        return r'${} \times 10^{{{}}}$'.format(a, b)
+        # Create output directory if it does not exists
+        dir_graphs = os.path.join(dir_root, "graphs")
+        if not os.path.exists(dir_graphs):
+            os.makedirs(dir_graphs)
 
-    step = data_plot["step"]
+        # Format the colorbar
+        def fmt(x, pos): 
+            a, b = '{:.2e}'.format(x).split('e')
+            b = int(b)
+            return r'${} \times 10^{{{}}}$'.format(a, b)
 
-    # Get ranges of parameters for current step
-    if data_monte_carlo.iloc[step - 1]["geomorpho_history_min"] < 0:
-        xmin = data_monte_carlo.iloc[step - 1]["geomorpho_history_min"]
-    else: 
-        xmin = 0.0
-    xmax = data_monte_carlo.iloc[step - 1]["geomorpho_history_max"]
-    ymin = 0.0
-    ymax = data_monte_carlo.iloc[step - 1]["total_time_max"]
+        step = data_plot["step"]
 
-    # Create meshgrid
-    xx, yy = np.mgrid[xmin:xmax:100j, ymin:ymax:100j]
+        # Get ranges of parameters for current step
+        if data_monte_carlo.iloc[step - 1]["geomorpho_history_min"] < 0:
+            xmin = data_monte_carlo.iloc[step - 1]["geomorpho_history_min"]
+        else: 
+            xmin = 0.0
+        xmax = data_monte_carlo.iloc[step - 1]["geomorpho_history_max"]
+        ymin = 0.0
+        ymax = data_monte_carlo.iloc[step - 1]["total_time_max"]
 
-    # We will fit a gaussian kernel using the scipy’s gaussian_kde method:
-    positions = np.vstack([xx.ravel(), yy.ravel()])
-    values = np.vstack([np.array(data_plot["geomorpho_history"]), np.array(data_plot["total_time"])])
-    kernel = stats.gaussian_kde(values, bw_method = 'scott')
-    f = np.reshape(kernel(positions).T, xx.shape)
+        # Create meshgrid
+        xx, yy = np.mgrid[xmin:xmax:100j, ymin:ymax:100j]
 
-    # Plotting gauss kernel with filled contours
-    plt.figure(figsize=(5, 4), facecolor = 'white')
-    cfset = plt.contourf(xx, yy, f, cmap = 'jet') 
-    plt.xlabel('U' + str(step) + ' erosion (cm)')
-    plt.ylabel('U' + str(step) + ' hiatus (yr)')
-    plt.axis([xmin, xmax, ymin, ymax])
-    # 0.0024 = max(kernel)
-    plt.colorbar(format = ticker.FuncFormatter(fmt)) 
-    # plt.colorbar(ticks = [0.000, 0.0012, 0.0024], format = ticker.FuncFormatter(fmt)) 
-    plt.savefig(dir_graphs + "graph-geom_hist-duration-step-" + str(step) +".png")
+        # We will fit a gaussian kernel using the scipy’s gaussian_kde method:
+        positions = np.vstack([xx.ravel(), yy.ravel()])
+        values = np.vstack([np.array(data_plot["geomorpho_history"]), np.array(data_plot["total_time"])])
+        kernel = stats.gaussian_kde(values, bw_method = 'scott')
+        f = np.reshape(kernel(positions).T, xx.shape)
+
+        # Plotting gauss kernel with filled contours
+        plt.figure(figsize=(5, 4), facecolor = 'white')
+        cfset = plt.contourf(xx, yy, f, cmap = 'jet') 
+        plt.xlabel('U' + str(step) + ' erosion (cm)')
+        plt.ylabel('U' + str(step) + ' hiatus (yr)')
+        plt.axis([xmin, xmax, ymin, ymax])
+        # 0.0024 = max(kernel)
+        plt.colorbar(format = ticker.FuncFormatter(fmt)) 
+        # plt.colorbar(ticks = [0.000, 0.0012, 0.0024], format = ticker.FuncFormatter(fmt)) 
+        plt.savefig(os.path.join(dir_graphs, "graph-geom_hist-duration-step-" + str(step) +".png"))

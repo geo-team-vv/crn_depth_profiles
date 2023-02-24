@@ -97,11 +97,11 @@ The default parameters values (see `CRN_functions.py` file for further details) 
  "surf_prod_ratio": 6.75}
 ```
 
-Any modification of these values can be directly done in the `CRN_functions.py` file or programmatically using the following line of code:
+Any modification of these values can be done programmatically using the following line of code:
 
 ```python
 # Define parameters of CRN modelling
-parameters = define_parameters()
+parameters = define_default_parameters()
 
 # Modify the production rate of Beryllium-10
 parameters["prod_rate"] = 4.8
@@ -110,7 +110,7 @@ parameters["prod_rate"] = 4.8
 
 ### Monte Carlo simulations
 
-To compute Monte Carlo simulations over the ranges of parameters defined in the `params_monte_carlo.csv` file, run the `CRN_model_monte_carlo.py` Python script. This script basically iterates `n_simus` simulations of the previously described workflow. The parameter `reproduce_scenario_geosite_as` should be set to "False" to model other profiles than the one from Vandermaelen et al. (2020).
+To compute Monte Carlo simulations over the ranges of parameters defined in the `params_monte_carlo.csv` file, run the `CRN_model_monte_carlo.py` Python script. This script basically iterates `n_simus` simulations of the previously described workflow. The parameter `reproduce_scenario_geosite_vandermaelen` should be set to "False" to model other profiles than the one from Vandermaelen et al. (2022).
 
 The `compute_monte_carlo_simulations()` function returns, as a dictionary, the scenarios for which the reduced Chi-squared value is significant, i.e. the associated p-value is greater than 0.05. Below, an hypothetical result:
 
@@ -118,13 +118,13 @@ The `compute_monte_carlo_simulations()` function returns, as a dictionary, the s
 [{'N_inh': [883944, 883944, 0, 883944, 0, 0, 90000, 0],
   'geomorpho_history': [141, -300, 115, -723, 0, 448, -90, 30],
   'total_time': [7002, 1000, 53805, 1000, 748182, 5129, 1000, 13501],
-  'chi': {'chi_value': 9867.474708264172, 'p_value': 0.0}},
+  'chi': {'chi_value': 9867.474708264172, 'p_value': 0.084}},
  {'N_inh': [929113, 929113, 0, 929113, 0, 0, 90000, 0],
   'geomorpho_history': [113, -663, 478, -420, 0, 145, -85, 25],
   'total_time': [5276, 1000, 58271, 1000, 849511, 3899, 1000, 18936]
-  'chi': {'chi_value': 13733.21938832975, 'p_value': 0.0}},
+  'chi': {'chi_value': 13733.21938832975, 'p_value': 0.056}},
  {'N_inh': [880718, 880718, 0, 880718, 0, 0, 90000, 0],
   'geomorpho_history': [6, -299, 114, -632, 0, 357, -135, 75],
   'total_time': [45307, 1000, 41334, 1000, 550432, 3832, 1000, 19145],
-  'chi': {'chi_value': 12634.719002980566, 'p_value': 0.0}}]
+  'chi': {'chi_value': 12634.719002980566, 'p_value': 0.135}}]
 ```

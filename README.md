@@ -1,8 +1,24 @@
 # Numerical modelling of complex CRN accumulation history
 
+## Installation
+
+To install the model, simply clone the current repository using the following command:
+
+```
+git clone https://github.com/geo-team-vv/crn_depth_profiles.git
+
+```
+
+The required dependencies to run the model are the following:
+
+- numpy >= 1.24.2
+- pandas >= 1.5.3
+- matplotlib >= 3.7.0
+- scipy >= 1.10.1
+
 ## Instructions
 
-More info about how to run the model is available [here](readme/instructions.md).
+More info about how to run the model is available [here](instructions/instructions.md).
 
 ## Purpose
 
@@ -12,6 +28,6 @@ This repository hosts the numerical modelling resources developed in the frame o
 
 ## Contact
 
-- Nathan Vandermaelen - UCLouvain, Belgium ([nathan.vandermaelen@uclouvain.be](nathan.vandermaelen@uclouvain.be)).
 - Veerle Vanacker - UCLouvain, Belgium ([veerle.vanacker@uclouvain.be](veerle.vanacker@uclouvain.be)).
 - François Clapuyt - UCLouvain, Belgium ([francois.clapuyt@uclouvain.be](francois.clapuyt@uclouvain.be)).
+- Nathan Vandermaelen - UCLouvain, Belgium ([LinkedIn profile](https://www.linkedin.com/in/nathan-vandermaelen-bb837419a/)).

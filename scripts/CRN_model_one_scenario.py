@@ -1,6 +1,6 @@
 # -----------------------------------------------------------------------------
 # Libraries to import
-from CRN_functions import *
+from utilities.CRN_functions import *
 
 # -----------------------------------------------------------------------------
 # Read data files
@@ -8,12 +8,12 @@ from CRN_functions import *
 # Get root directory
 dir_root = os.path.dirname(sys.path[0])
 # Read csv files containing observed data
-data_Al = pd.read_csv(dir_root + "/data/obs_data_al.csv", sep = ";", header = 0)
-data_Be = pd.read_csv(dir_root + "/data/obs_data_be.csv", sep = ";", header = 0)
+data_Al = pd.read_csv(os.path.join(dir_root, "data", "obs_data_al.csv"), sep = ";", header = 0)
+data_Be = pd.read_csv(os.path.join(dir_root, "data", "obs_data_be.csv"), sep = ";", header = 0)
 
 # -----------------------------------------------------------------------------
 # Define parameters of CRN modelling
-parameters = define_parameters()
+parameters = define_default_parameters()
 
 # -----------------------------------------------------------------------------
 #  Implementation of one single scenario of erosion history
